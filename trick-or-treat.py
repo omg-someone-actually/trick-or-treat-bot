@@ -14,7 +14,7 @@ function add_candy(member){
       
         if (err) throw err;
        
-        var users = JSON.parse(data);
+        var users = JSON.parse(JSON.stringify(data));
           
         if (!(member in users)){
             users[member] = {};
@@ -31,7 +31,7 @@ function add_trick(member){
       
         if (err) throw err;
        
-        var users = JSON.parse(data);
+        var users = JSON.parse(JSON.stringify(data));
           
         if (!(member in users)){
             users[member] = {};
@@ -47,7 +47,7 @@ function add_trick(member){
 function get_candy(member){
     var data = fs.readFileSync("users.json")
        
-        var users = JSON.parse(data);
+        var users = JSON.parse(JSON.stringify(data));
 
         if (!(member in users)){
             users[member] = {};
@@ -63,7 +63,7 @@ function get_candy(member){
 function get_tricks(member){
     var data = fs.readFileSync("users.json")
              
-        var users = JSON.parse(data);
+        var users = JSON.parse(JSON.stringify(data));
 
         if (!(member in users)){
             users[member] = {};
@@ -84,15 +84,15 @@ function randint(min, max) {
   bot.ready_to_trick_or_treat = false;
 
   bot.on("ready", async () => {
-    await bot.guilds.cache.get('server_id').commands.set([]);
+    await bot.guilds.cache.get('guild_id').commands.set([]);
     if (!bot.application?.owner) bot.application?.fetch();
 
-    bot.guilds.cache.get('server_id')?.commands.create({
+    bot.guilds.cache.get('guild_id')?.commands.create({
         name: "bag",
         description: "See your treats and tricks!"
     });
 
-    bot.guilds.cache.get('844260492826378240')?.commands.create({
+    bot.guilds.cache.get('guild_id')?.commands.create({
         name: "trick-or-treat",
         description: "Trick or treat?!"
     });
@@ -121,12 +121,10 @@ bot.on("interactionCreate", async interaction => {
   
   bot.on("messageCreate", async (message) => {
       if (message.author.bot) return;
-      if (randint(1, 500) == 420) {
+      if (randint(1, 50) == 32) {
           message.channel.send("Trick or treat!");
           bot.ready_to_trick_or_treat = true;
     }
   })
-
-
 
 bot.login("bot_token");
